@@ -2,6 +2,10 @@ Config = {}
 
 Config.KeyToOpenMenu = 46
 
+Config.ShowBankBlips = true
+
+Config.ShowATMBlips = true
+
 Config.Banks = {
     {name = "Bank", id = 108, x = 150.266, y = -1040.203, z = 29.374},
     {name = "Bank", id = 108, x = -1212.980, y = -330.841, z = 37.787},

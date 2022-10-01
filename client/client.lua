@@ -8,7 +8,8 @@ Citizen.CreateThread(
                 exports["vrp_textui"]:Open("Apasa [E] pentru a deschide meniul ", "#00FF00", "left")
                 if IsControlJustPressed(1, Config.KeyToOpenMenu) then
                     SetDisplay(true)
-                    TriggerServerEvent("bank:balance")
+                    TriggerScreenblurFadeIn(750)
+                    TriggerServerEvent(GetCurrentResourceName() ":requestMoneyAmountInBank")
                 end
             else
                 exports["vrp_textui"]:Close()
@@ -16,9 +17,23 @@ Citizen.CreateThread(
 
             if IsControlJustPressed(1, 322) then
                 SetDisplay(false)
-                SendNUIMessage({type = "close"})
             end
         end
+    end
+)
+
+RegisterNUICallback(
+    "requestMoneyAmountInBank",
+    function()
+        TriggerServerEvent(GetCurrentResourceName() ":requestMoneyAmountInBank")
+    end
+)
+
+RegisterNetEvent(GetCurrentResourceName() ":updateBankBalance")
+AddEventHandler(
+    GetCurrentResourceName() ":updateBankBalance",
+    function(balance)
+        SendNUIMessage({type = "updateBankBalance", bal = balance})
     end
 )
 
@@ -30,13 +45,22 @@ RegisterNUICallback(
     end
 )
 
+RegisterNUICallback(
+    "action",
+    function(data)
+        TriggerServerEvent(GetCurrentResourceName() ":action", data)
+    end
+)
+
 function SetDisplay(bool)
     display = bool
     SetNuiFocus(bool, bool)
-    SendNUIMessage({
-        action = "ui",
-        status = bool
-    })
+    SendNUIMessage(
+        {
+            action = "ui",
+            status = bool
+        }
+    )
 end
 
 function nearBank()
@@ -75,6 +99,42 @@ Citizen.CreateThread(
             DisableControlAction(0, 18, display)
             DisableControlAction(0, 322, display)
             DisableControlAction(0, 106, display)
+        end
+    end
+)
+
+Citizen.CreateThread(
+    function()
+        if Config.ShowBankBlips then
+            for _, bankCoords in ipairs(Config.Banks) do
+                local bankBlip = AddBlipForCoord(bankCoords.x, bankCoords.y, bankCoords.z)
+                SetBlipSprite(bankBlip, bankCoords.id)
+                SetBlipDisplay(bankBlip, 4)
+                SetBlipScale(bankBlip, 0.9)
+                SetBlipColour(bankBlip, 2)
+                SetBlipAsShortRange(bankBlip, true)
+                BeginTextCommandSetBlipName("STRING")
+                AddTextComponentString(tostring(bankCoords.name))
+                EndTextCommandSetBlipName(bankBlip)
+            end
+        end
+    end
+)
+
+Citizen.CreateThread(
+    function()
+        if Config.ShowATMBlips then
+            for _, atmCoords in ipairs(Config.ATMs) do
+                local atmBlip = AddBlipForCoord(atmCoords.x, atmCoords.y, atmCoords.z)
+                SetBlipSprite(atmBlip, atmCoords.id)
+                SetBlipDisplay(atmBlip, 4)
+                SetBlipScale(atmBlip, 0.9)
+                SetBlipColour(atmBlip, 2)
+                SetBlipAsShortRange(atmBlip, true)
+                BeginTextCommandSetBlipName("STRING")
+                AddTextComponentString(tostring(atmCoords.name))
+                EndTextCommandSetBlipName(atmBlip)
+            end
         end
     end
 )

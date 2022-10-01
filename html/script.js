@@ -3,9 +3,12 @@ var isInMenu = false
 function Display(bool) {
     if (bool) {
         $("#container").fadeIn(750);
+        closeSecondaryMenu()
         isInMenu = true
     } else {
         $("#container").fadeOut(750);
+        closeSecondaryMenu()
+        $.post('http://${GetParentResourceName()}/exit', JSON.stringify({}));
         isInMenu = false
     }
 }
@@ -34,11 +37,14 @@ function closeSecondaryMenu() {
     $("#secondaryMenu").fadeOut(250)
 }
 
-function handleAction(data){
+function handleAction(data) {
     console.log(data)
+    $.post('http://${GetParentResourceName()}/action', JSON.stringify({
+        data
+    }));
 }
 
-$(document).click(function (event) {
+$(document).click(function(event) {
     if (!isInMenu) return
     switch (event.target.id) {
         case "backButtonSecondaryMenu":
@@ -61,14 +67,14 @@ $(document).click(function (event) {
             data.amount = $("#amount1").val()
             data.action = "withdraw"
             handleAction(data)
-            closeSecondaryMenu()
+            Display(false)
             break;
         case "deposit":
             var data = {}
             data.amount = $("#amount2").val()
             data.action = "deposit"
             handleAction(data)
-            closeSecondaryMenu()
+            Display(false)
             break;
         case "transfer":
             var data = {}
@@ -76,9 +82,9 @@ $(document).click(function (event) {
             data.amount = $("#amount2").val()
             data.action = "transfer"
             handleAction(data)
-            closeSecondaryMenu()
+            Display(false)
             break;
         default:
             break;
-    }    
+    }
 })

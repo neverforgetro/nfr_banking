@@ -11,71 +11,70 @@
 
 <body>
     <div class="container" id="container">
-      <div class="backgroundGIF"></div>
-    <div class="mainMenu">
-        <div class="title">NFR</div>
-        <!-- NUMELE SERVERULUI/TITLU -->
-        <h1 class="subtitle">
-            <font class="highlitedChar">B</font>ANKING
-        </h1>
-        <div class="header3">Welcome to the bank!</div>
-        <div class="header4">Here you can manage your bank acount as you wish.</div>
-        <div class="balance">
-            <div class="amount" id="amount">$ 905360</div>
-            <div class="text1">You have it in your bank account</div>
-        </div>
-        <div class="nume">
-            <div class="text2">
-                CitizenID
-                <div class="text3" id="playerid">2268</div>
+        <div class="backgroundGIF"></div>
+        <div class="mainMenu">
+            <div class="title">NFR</div>
+            <h1 class="subtitle">
+                <font class="highlitedChar">B</font>ANKING
+            </h1>
+            <div class="header3">Welcome to the bank!</div>
+            <div class="header4">Here you can manage your bank acount as you wish.</div>
+            <div class="balance">
+                <div class="amount" id="amount">$ 905360</div>
+                <div class="text1">You have it in your bank account</div>
             </div>
-        </div>
-        <div class="iconbalance"></div>
-        <div class="buttons">
-            <button class="buttonExit" id="exit">Exit</button>
-            <div class="buttonWithdraw" id="buttonWithdraw">
-                <div class="image-withdraw ignoreClick"></div>
-                <div class="text4 ignoreClick">
-                    WITHDRAW
-                    <div class="text5 ignoreClick">Withdraws an amount of money from the bank.</div>
+            <div class="nume">
+                <div class="text2">
+                    CitizenID
+                    <div class="text3" id="playerid">2268</div>
                 </div>
             </div>
-            <div class="buttonDeposit" id="buttonDeposit">
-                <div class="image-deposit ignoreClick"></div>
-                <div class="text6 ignoreClick">
-                    DEPOSIT
-                    <div class="text7 ignoreClick">Deposit a sum of money from the bank.</div>
+            <div class="iconbalance"></div>
+            <div class="buttons">
+                <button class="buttonExit" id="exit">Exit</button>
+                <div class="buttonWithdraw" id="buttonWithdraw">
+                    <div class="image-withdraw ignoreClick"></div>
+                    <div class="text4 ignoreClick">
+                        WITHDRAW
+                        <div class="text5 ignoreClick">Withdraws an amount of money from the bank.</div>
+                    </div>
+                </div>
+                <div class="buttonDeposit" id="buttonDeposit">
+                    <div class="image-deposit ignoreClick"></div>
+                    <div class="text6 ignoreClick">
+                        DEPOSIT
+                        <div class="text7 ignoreClick">Deposit a sum of money from the bank.</div>
+                    </div>
+                </div>
+                <div class="buttonTransfer" id="buttonTransfer">
+                    <div class="image-transfer ignoreClick"></div>
+                    <div class="text8 ignoreClick">
+                        TRANSFER
+                        <div class="text9 ignoreClick">Transfer a sum of money from the bank to a person.</div>
+                    </div>
                 </div>
             </div>
-            <div class="buttonTransfer" id="buttonTransfer">
-                <div class="image-transfer ignoreClick"></div>
-                <div class="text8 ignoreClick">
-                    TRANSFER
-                    <div class="text9 ignoreClick">Transfer a sum of money from the bank to a person.</div>
-                </div>
+        </div>
+        <div class="secondaryMenu" id="secondaryMenu">
+            <button class="back" id="backButtonSecondaryMenu">Back</button>
+            <div class="withdrawMenu" id="withdrawMenu">
+                <div class="text10">Amount</div>
+                <input placeholder="Eg. 100.000.000" type="number" class="input1" id="amount1"></input>
+                <button class="withdraw" id="withdraw">Withdraw</button>
+            </div>
+            <div class="depositMenu" id="depositMenu">
+                <div class="text11">Amount</div>
+                <input placeholder="Eg. 100.000.000" type="number" class="input2" id="amount2"></input>
+                <button class="deposit" id="deposit">Deposit</button>
+            </div>
+            <div class="transferMenu" id="transferMenu">
+                <div class="text12">CitizenID</div>
+                <input placeholder="Eg. 124" type="number" class="input3" id="userID"></input>
+                <div class="text13">Amount</div>
+                <input placeholder="Eg. 100.000.000" type="number" class="input4" id="amount3"></input>
+                <button class="transfer" id="transfer">Transfer</button>
             </div>
         </div>
-    </div>
-    <div class="secondaryMenu" id="secondaryMenu">
-      <button class="back" id="backButtonSecondaryMenu">Back</button>
-        <div class="withdrawMenu" id="withdrawMenu">
-            <div class="text10">Amount</div>
-            <input placeholder="Eg. 100.000.000" type="number" class="input1" id="amount1"></input>
-            <button class="withdraw" id="withdraw">Withdraw</button>
-        </div>
-        <div class="depositMenu" id="depositMenu">
-            <div class="text11">Amount</div>
-            <input placeholder="Eg. 100.000.000" type="number" class="input2" id="amount2"></input>
-            <button class="deposit" id="deposit">Deposit</button>
-        </div>
-        <div class="transferMenu" id="transferMenu">
-            <div class="text12">CitizenID</div>
-            <input placeholder="Eg. 124" type="number" class="input3" id="userID"></input>
-            <div class="text13">Amount</div>
-            <input placeholder="Eg. 100.000.000" type="number" class="input4" id="amount3"></input>
-            <button class="transfer" id="transfer">Transfer</button>
-        </div>
-    </div>
     </div>
 </body>
 

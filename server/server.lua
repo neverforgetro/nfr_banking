@@ -2,58 +2,67 @@ local Tunnel = module("vrp", "lib/Tunnel")
 local Proxy = module("vrp", "lib/Proxy")
 vRP = Proxy.getInterface("vRP")
 vRPclient = Tunnel.getInterface("vRP","vRP")
-RegisterNetEvent('NFR:balance')
-AddEventHandler('NFR:balance', function()
-    local _source = source
-	local thePlayer = _source
-	local user_id = vRP.getUserId({thePlayer})
-    local bankMoney = vRP.getBankMoney({user_id})
-    TriggerClientEvent('currentbalance1', thePlayer, bankMoney, user_id)
-end)
 
-RegisterServerEvent('NFR:withdraw')
-AddEventHandler('NFR:withdraw', function(amount)
-    local _source = source
-	local user_id = vRP.getUserId({_source})
-    local bankMoney = vRP.getBankMoney({user_id})
-    local value = bankMoney-amount
-    if amount > bankMoney then
-        vRPclient.notify(_source,{"Nu detii aceasta suma!"},4)
-    else
-        vRP.setBankMoney({user_id,value})
-        vRP.giveMoney({user_id,amount})
-        vRPclient.notify(_source,{"Ai extras "..amount.."$ din contul tau bancar"},4)
+RegisterNetEvent(GetCurrentResourceName() ":requestMoneyAmountInBank")
+AddEventHandler(
+    GetCurrentResourceName() ":requestMoneyAmountInBank",
+    function(source)
+        local user_id = vRP.getUserId({source})
+        local userbankBalanace = vRP.getBankMoney({user_id})
+        TriggerClientEvent(GetCurrentResourceName() ":updateBankBalance", source, userbankBalanace)
     end
-end)
-RegisterServerEvent('NFR:deposit')
-AddEventHandler('NFR:deposit', function(amount)
-    local _source = source
-	local user_id = vRP.getUserId({_source})
-    local pocketMoney = vRP.getMoney({user_id})
-    local value = pocketMoney-amount
-    if amount > pocketMoney then
-        vRPclient.notify(_source,{"Nu detii aceasta suma!"},4)
-    else
-        vRP.setMoney({user_id,value})
-        vRP.giveBankMoney({user_id,amount})
-        vRPclient.notify(_source,{"Ai depus "..amount.."$ in contul tau bancar"},4)
-    end
-end)
-RegisterServerEvent('NFR:transfer')
-AddEventHandler('NFR:transfer', function(amount, userid)
-    local _source = source
-    local touser_id = vRP.getUserId({userid})
-    local tosource =  vRP.getUserSource({touser_id})
-	local user_id = vRP.getUserId({_source})
-    local bankMoney = vRP.getBankMoney({user_id})
-    local value = bankMoney-amount
-        if amount > bankMoney then 
-            vRPclient.notify(_source,{"Nu detii aceasta suma!"},4)
-        else
-            vRP.setBankMoney({user_id,value})
-            vRPclient.notify(_source,{"Ai trimis "..amount.." $ catre ID: "..user_id..""},4)
+)
 
-            vRP.giveBankMoney({user_id,amount})
-            vRPclient.notify(_source,{"Ai primit "..amount.." din partea lui ID:"..user_id..""},4)
+RegisterNetEvent(GetCurrentResourceName() ":action")
+AddEventHandler(
+    GetCurrentResourceName() ":action",
+    function(source, data)
+        local user_id = vRP.getUserId({source})
+        local userbankBalanace = vRP.getBankMoney({user_id})
+        local userBalance = vRP.getMoney({user_id})
+        local data = json.decode(data)
+        if (data.action == "withdraw") then
+            local amountToWithdraw = tonumber(data.amount)
+            if amountToWithdraw > userbankBalanace then
+                vRPclient.notify(source,{"Eroare: Nu ai destui bani in banca pentru a retrage aceasta suma de bani!"})
+                return
+            else
+                vRP.setBankMoney({user_id,userbankBalanace - amountToWithdraw})
+                vRP.setMoney({user_id,userBalance + amountToWithdraw})
+                vRPclient.notify(source,{string.format("Succes: Ai retras cu succes din banca suma de %s$. Noua ta balanta in banca este %s$!",amountToWithdraw,userbankBalanace - amountToWithdraw)})
+                return
+            end
         end
-end)
+        if (data.action == "deposit") then
+            local amountToDeposit = tonumber(data.amount)
+            if amountToDeposit > userBalance then
+                vRPclient.notify(source,{"Eroare: Nu ai destui bani la tine pentru a depozita aceasta suma de bani!"})
+                return
+            else
+                vRP.setBankMoney({user_id,userbankBalanace + amountToDeposit})
+                vRP.setMoney({user_id,userBalance - amountToDeposit})
+                vRPclient.notify(source,{string.format("Succes: Ai depozitat cu succes in banca suma de %s$. Noua ta balanta in banca este %s$!",amountToDeposit,userbankBalanace + amountToDeposit)})
+                return
+            end
+        end
+        if (data.action == "transfer") then
+            local target_user_id = vRP.getUserId({data.userid})
+            local target_source = vRP.getUserSource({target_user_id})
+            local amountToTransfer = tonumber(data.amount)
+            if target_source == nil then 
+                vRPclient.notify(source,{"Eroare: Acest cetatean nu se afla momentan in oras, incearca mai tarziu!"})
+            end
+            if amountToTransfer > userbankBalanace then
+                vRPclient.notify(source,{"Eroare: Nu ai destui bani in banca pentru a transfera aceasta suma!"})
+                return
+            else
+                local target_bankBalance = vRP.getBankMoney({target_user_id})
+                vRP.setBankMoney({target_user_id,target_bankBalance + amountToTransfer})
+                vRP.setBankMoney({user_id,userbankBalanace - amountToTransfer})
+                vRPclient.notify(source,{string.format("Succes: Ai transferat cu succes suma de %s$ catre cetateanul cu ID-ul %s. Noua ta balanca in banca este %s$!",amountToTransfer, amount.amountToTransfer, userbankBalanace - amountToTransfer)})
+                vRPclient.notify(target_source,{string.format("Succes: Ai depozitat cu succes in banca suma de %s$. Noua ta balanta in banca este %s$!",amountToDeposit,userbankBalanace + amountToDeposit)})
+                return
+            end
+        end
+    end
+)
