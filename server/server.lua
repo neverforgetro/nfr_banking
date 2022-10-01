@@ -23,6 +23,10 @@ AddEventHandler(
         TriggerClientEvent("nfr_banking:updateBankBalance", source, userbankBalanace, user_id)
         if (data.action == "withdraw") then
             local amountToWithdraw = tonumber(data.amount)
+            if amountToWithdraw <= 0 then
+                vRPclient.notify(source,{"Eroare: Nu ai cum sa retragi sume nule de bani!"})
+                return
+            end
             if amountToWithdraw > userbankBalanace then
                 vRPclient.notify(source,{"Eroare: Nu ai destui bani in banca pentru a retrage aceasta suma de bani!"})
                 return
@@ -35,6 +39,10 @@ AddEventHandler(
         end
         if (data.action == "deposit") then
             local amountToDeposit = tonumber(data.amount)
+            if amountToDeposit <= 0 then
+                vRPclient.notify(source,{"Eroare: Nu ai cum sa depozitezi sume nule de bani!"})
+                return
+            end
             if amountToDeposit > userBalance then
                 vRPclient.notify(source,{"Eroare: Nu ai destui bani la tine pentru a depozita aceasta suma de bani!"})
                 return
@@ -51,6 +59,11 @@ AddEventHandler(
             local amountToTransfer = tonumber(data.amount)
             if target_source == nil then 
                 vRPclient.notify(source,{"Eroare: Acest cetatean nu se afla momentan in oras, incearca mai tarziu!"})
+                return
+            end
+            if target_user_id == user_id then
+                vRPclient.notify(source,{"Eroare: Nu ai cum sa iti trimiti bani singur!"})
+                return
             end
             if amountToTransfer > userbankBalanace then
                 vRPclient.notify(source,{"Eroare: Nu ai destui bani in banca pentru a transfera aceasta suma!"})
