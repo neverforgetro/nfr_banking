@@ -1,89 +1,80 @@
-vRP = Proxy.getInterface("vRP")
-RegisterNetEvent('currentbalance1')
-AddEventHandler('currentbalance1', function(balance, user_id)
-	local id = PlayerId()
-	local playerName = GetPlayerName(id)
+local display = false
 
-	SendNUIMessage({
-		type = "bankBalance",
-		balance = balance,
-        userid = user_id
-		})
-end)
-
-CreateThread(function()
-    local locations = Config.ATMs
-    while true do
-        Citizen.Wait(2000) -- teoretic orice valoare mai mare de 1s consuma aproape nimic
-        for i = 1, #locations do
-        local location = locations[i]
-        local ped = PlayerPedId()
-        local pos = GetEntityCoords(ped)
-        local dst = #(pos - location)
-        
-        while dst <= 10.0 do
-        if dst <= 3.0 then
-            exports['vrp_textui']:Open('Apasa [E] pentru a deschide meniul ', 'darkgrey', 'left') 
-            if IsControlJustPressed(0, 46) then
-                TriggerServerEvent('NFR:balance')
-                Citizen.Wait(100)
-                SetDisplay(not display)
+Citizen.CreateThread(
+    function()
+        while true do
+            Wait(7)
+            if nearBank() or nearATM() then
+                exports["vrp_textui"]:Open("Apasa [E] pentru a deschide meniul ", "#00FF00", "left")
+                if IsControlJustPressed(1, Config.KeyToOpenMenu) then
+                    SetDisplay(true)
+                    TriggerServerEvent("bank:balance")
+                end
+            else
+                exports["vrp_textui"]:Close()
             end
-        else 
-            exports['vrp_textui']:Close()
-        end
-          Citizen.Wait(1)
-          dst = #(GetEntityCoords(ped) - location)
+
+            if IsControlJustPressed(1, 322) then
+                SetDisplay(false)
+                SendNUIMessage({type = "close"})
+            end
         end
     end
+)
+
+RegisterNUICallback(
+    "exit",
+    function()
+        TriggerScreenblurFadeOut(750)
+        SetDisplay(false)
     end
-end)
-RegisterNUICallback("withdraw", function(data)
-    TriggerServerEvent('NFR:withdraw', tonumber(data.amount))
-    TriggerServerEvent('NFR:balance')
-    SetDisplay(false)
-end)
-RegisterNUICallback("deposit", function(data)
-    TriggerServerEvent('NFR:deposit', tonumber(data.amount))
-    TriggerServerEvent('NFR:balance')
-    SetDisplay(false)
-end)
-RegisterNUICallback("transfer", function(data)
-    TriggerServerEvent('NFR:transfer', tonumber(data.amount),data.userid)
-    TriggerServerEvent('NFR:balance')
-    SetDisplay(false)
-end)
-
-RegisterNUICallback("error", function(data)
-    vRP.notify({""..data.error.."",4})
-end)
-
-RegisterNUICallback("exit", function()
-    Citizen.Wait(10)
-    SetDisplay(false)
-    estelider = false
-    TriggerServerEvent('petrol:stop')
-end)
-
-
+)
 
 function SetDisplay(bool)
     display = bool
     SetNuiFocus(bool, bool)
     SendNUIMessage({
-        type = "ui",
-        status = bool,
+        action = "ui",
+        status = bool
     })
 end
 
-Citizen.CreateThread(function()
-    while display do
-        Citizen.Wait(10)
-        DisableControlAction(0, 1, display)
-        DisableControlAction(0, 2, display)
-        DisableControlAction(0, 142, display)
-        DisableControlAction(0, 18, display)
-        DisableControlAction(0, 322, display)
-        DisableControlAction(0, 106, display)
+function nearBank()
+    local playerPed = GetPlayerPed(-1)
+    local playerLocation = GetEntityCoords(playerPed, 0)
+    for _, bankCoords in pairs(Config.Banks) do
+        local distance =
+            #(vector3(bankCoords.x, bankCoords.y, bankCoords.z) -
+            vector3(playerLocation["x"], playerLocation["y"], playerLocation["z"]))
+        if distance <= 3 then
+            return true
+        end
     end
-end)
+end
+
+function nearATM()
+    local playerPed = PlayerPedId()
+    local playerLocation = GetEntityCoords(playerPed, 0)
+    for _, atmCoords in pairs(Config.ATMs) do
+        local distance =
+            #(vector3(atmCoords.x, atmCoords.y, atmCoords.z) -
+            vector3(playerLocation["x"], playerLocation["y"], playerLocation["z"]))
+        if distance <= 2 then
+            return true
+        end
+    end
+end
+
+Citizen.CreateThread(
+    function()
+        while display do
+            Citizen.Wait(10)
+            DisableControlAction(0, 1, display)
+            DisableControlAction(0, 2, display)
+            DisableControlAction(0, 142, display)
+            DisableControlAction(0, 18, display)
+            DisableControlAction(0, 322, display)
+            DisableControlAction(0, 106, display)
+        end
+    end
+)

@@ -1,5 +1,5 @@
 var open = false
-$("#exit").click(function () {
+$("#exit").click(function() {
     open = false
     openclose(false)
     openclose2(false)
@@ -7,43 +7,43 @@ $("#exit").click(function () {
     $.post("http://nfr_banking/exit", JSON.stringify({}))
     return
 })
-$("#open-withdraw").click(function () {
-    if (open == false){
+$("#open-withdraw").click(function() {
+    if (open == false) {
         open = true
         openclose(true)
     }
     return
 })
-$("#open-deposit").click(function () {
-    if (open == false){
+$("#open-deposit").click(function() {
+    if (open == false) {
         open = true
         openclose2(true)
     }
     return
 })
-$("#open-transfer").click(function () {
-    if (open == false){
+$("#open-transfer").click(function() {
+    if (open == false) {
         open = true
         openclose3(true)
     }
     return
 })
-$("#back").click(function () {
+$("#back").click(function() {
     open = false
     openclose(false)
     return
 })
-$("#back2").click(function () {
+$("#back2").click(function() {
     open = false
     openclose2(false)
     return
 })
-$("#back3").click(function () {
+$("#back3").click(function() {
     open = false
     openclose3(false)
     return
 })
-$("#withdraw").click(function (e) {
+$("#withdraw").click(function(e) {
     let inputValue = $("#amount1").val()
 
     if (inputValue.length >= 11) {
@@ -62,7 +62,7 @@ $("#withdraw").click(function (e) {
         openclose(false)
         return
     }
-    if (open == true){
+    if (open == true) {
         e.preventDefault();
         $.post("http://nfr_banking/withdraw", JSON.stringify({
             amount: inputValue
@@ -72,7 +72,7 @@ $("#withdraw").click(function (e) {
     openclose(false)
     return;
 })
-$("#deposit").click(function (e) {
+$("#deposit").click(function(e) {
     let inputValue = $("#amount2").val()
 
     if (inputValue.length >= 11) {
@@ -91,7 +91,7 @@ $("#deposit").click(function (e) {
         openclose2(false)
         return
     }
-    if (open == true){
+    if (open == true) {
         e.preventDefault();
         $.post("http://nfr_banking/deposit", JSON.stringify({
             amount: inputValue
@@ -101,7 +101,7 @@ $("#deposit").click(function (e) {
     openclose2(false)
     return;
 })
-$("#transfer").click(function (e) {
+$("#transfer").click(function(e) {
     let inputValue = $("#amount3").val()
     let inputValue2 = $("#userid").val()
     if (inputValue.length >= 11) {
@@ -120,7 +120,7 @@ $("#transfer").click(function (e) {
         openclose3(false)
         return
     }
-    if (open == true){
+    if (open == true) {
         e.preventDefault();
         $.post("http://nfr_banking/transfer", JSON.stringify({
             amount: inputValue,
@@ -131,6 +131,7 @@ $("#transfer").click(function (e) {
     openclose3(false)
     return;
 })
+
 function openclose(bool) {
     var div = $(".popup1");
     var button1 = $(".border-withdraw");
@@ -145,18 +146,23 @@ function openclose(bool) {
         button1.css('z-index', -1)
         button2.css('z-index', -1)
         button3.css('z-index', -1)
-        div.animate({opacity: '1'}, 200);
+        div.animate({
+            opacity: '1'
+        }, 200);
     } else {
-        $( ".input1" ).val( "" )
+        $(".input1").val("")
         div.css('z-index', -1)
         back.css('z-index', -1)
         exit.css('z-index', 1)
         button1.css('z-index', 1)
         button2.css('z-index', 1)
         button3.css('z-index', 1)
-        div.animate({opacity: '0'}, 200);
+        div.animate({
+            opacity: '0'
+        }, 200);
     }
-    }
+}
+
 function openclose2(bool) {
     var div = $(".popup2");
     var button1 = $(".border-withdraw");
@@ -171,74 +177,79 @@ function openclose2(bool) {
         button1.css('z-index', -1)
         button2.css('z-index', -1)
         button3.css('z-index', -1)
-        div.animate({opacity: '1'}, 200);
+        div.animate({
+            opacity: '1'
+        }, 200);
     } else {
-        $( ".input2" ).val( "" )
+        $(".input2").val("")
         div.css('z-index', -1)
         back.css('z-index', -1)
         exit.css('z-index', 1)
         button1.css('z-index', 1)
         button2.css('z-index', 1)
         button3.css('z-index', 1)
-        div.animate({opacity: '0'}, 200);
+        div.animate({
+            opacity: '0'
+        }, 200);
     }
-        }
-        function openclose3(bool) {
-            var div = $(".popup3");
-            var button1 = $(".border-withdraw");
-            var button2 = $(".border-transfer");
-            var button3 = $(".border-deposit");
-            var back = $(".back3");
-            var exit = $(".exit");
-            if (bool) {
-                div.css('z-index', 1)
-                back.css('z-index', 1)
-                exit.css('z-index', -1)
-                button1.css('z-index', -1)
-                button2.css('z-index', -1)
-                button3.css('z-index', -1)
-                div.animate({opacity: '1'}, 200);
-            } else {
-                $( ".input3" ).val( "" )
-                div.css('z-index', -1)
-                back.css('z-index', -1)
-                exit.css('z-index', 1)
-                button1.css('z-index', 1)
-                button2.css('z-index', 1)
-                button3.css('z-index', 1)
-                div.animate({opacity: '0'}, 200);
-            }
-                }
-    
+}
+
+function openclose3(bool) {
+    var div = $(".popup3");
+    var button1 = $(".border-withdraw");
+    var button2 = $(".border-transfer");
+    var button3 = $(".border-deposit");
+    var back = $(".back3");
+    var exit = $(".exit");
+    if (bool) {
+        div.css('z-index', 1)
+        back.css('z-index', 1)
+        exit.css('z-index', -1)
+        button1.css('z-index', -1)
+        button2.css('z-index', -1)
+        button3.css('z-index', -1)
+        div.animate({
+            opacity: '1'
+        }, 200);
+    } else {
+        $(".input3").val("")
+        div.css('z-index', -1)
+        back.css('z-index', -1)
+        exit.css('z-index', 1)
+        button1.css('z-index', 1)
+        button2.css('z-index', 1)
+        button3.css('z-index', 1)
+        div.animate({
+            opacity: '0'
+        }, 200);
+    }
+}
+
 function display(bool) {
-if (bool) {
-    $(".all").fadeIn(200);
+    if (bool) {
+        $(".all").fadeIn(200);
 
-} else {
-    $(".all").fadeOut(200);
-    openclose(false)
-    openclose2(false)
-    // openclose3(false)
+    } else {
+        $(".all").fadeOut(200);
+        openclose(false)
+        openclose2(false)
+        // openclose3(false)
+    }
 }
-}
-
-display(false)
-
-
 
 window.addEventListener('message', function(event) {
-var item = event.data;
-if (item.type === "ui") {
-    if (item.status == true) {
-        display(true)
-    } else {
-        display(false)
-    }
-} else if(item.type === "bankBalance") {
-    
-    var money = Intl.NumberFormat('de-DE').format(event.data.balance)
-            $('#amount').html(money + "$");
-            $('#playerid').html(event.data.userid);
+    var item = event.data;
+    if (item.type === "ui") {
+        if (item.status == true) {
+            display(true)
+        } else {
+            display(false)
+        }
+    } else if (item.type === "bankBalance") {
+
+        var money = Intl.NumberFormat('de-DE').format(event.data.balance)
+        $('#amount').html(money + "$");
+        $('#playerid').html(event.data.userid);
     }
 })
 document.onkeyup = function(data) {
