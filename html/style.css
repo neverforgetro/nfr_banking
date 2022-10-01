@@ -6,6 +6,15 @@ html {
 }
 
 .container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+.mainMenu {
     position: absolute;
     z-index: 2;
     height: 100%;
@@ -166,6 +175,7 @@ html {
     right: 2.5vw;
     top: 2vw;
     border-radius: 0.9vw;
+    cursor: pointer;
     border: none;
     outline: none;
     color: white;
@@ -178,7 +188,7 @@ html {
   inherits: false;
 }
 
-.buttomWithdraw {
+.buttonWithdraw {
     z-index: 1;
     position: absolute;
     width: 17vw;
@@ -191,11 +201,12 @@ html {
     transition: --withdrawGradientColor 0.15s;
 }
 
-.buttomWithdraw:hover {
+.buttonWithdraw:hover {
   --withdrawGradientColor: rgba(2, 182, 74, 0.2);
 }
 
 .image-withdraw {
+    
     position: absolute;
     width: 8vw;
     height: 8vw;
@@ -256,6 +267,7 @@ html {
 }
 
 .image-deposit {
+    
     position: absolute;
     width: 11vw;
     height: 11vw;
@@ -316,6 +328,7 @@ html {
 }
 
 .image-transfer {
+    
     position: absolute;
     width: 9vw;
     height: 9vw;
@@ -352,18 +365,6 @@ html {
     top: 11.2vw;
 }
 
-.popup1 {
-    z-index: -5;
-    opacity: 0;
-}
-
-.popup-blur {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(1vw);
-}
-
 .back {
     position: absolute;
     font-weight: 600;
@@ -374,6 +375,7 @@ html {
     top: 2vw;
     border-radius: 0.9vw;
     border: none;
+    cursor: pointer;
     outline: none;
     color: white;
     filter: drop-shadow(0vw 0vw 1vw white);
@@ -440,18 +442,6 @@ html {
 .input1::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
-
-.popup2 {
-    z-index: -1;
-    opacity: 0;
-}
-
-.popup2-blur {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(1vw);
 }
 
 .back2 {
@@ -530,18 +520,6 @@ html {
 .input2::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
-
-.popup3 {
-    z-index: -1;
-    opacity: 0;
-}
-
-.popup3-blur {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(1vw);
 }
 
 .back3 {
@@ -649,4 +627,32 @@ html {
 .input4::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+.secondaryMenu {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 500;
+  backdrop-filter: blur(1vw);
+  background: rgba(35,35,35.1.75);
+}
+
+.withdrawMenu {
+  display: none;
+}
+
+.depositMenu {
+  display: none;
+}
+
+.transferMenu {
+  display: none;
+}
+
+.ignoreClick {
+  pointer-events: none;
 }

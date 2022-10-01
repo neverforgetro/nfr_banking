@@ -1,80 +1,82 @@
 <!DOCTYPE html>
-<html lang="en" >
-   <head>
-      <meta charset="UTF-8">
-      <title>NFR Banking</title>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-      <link rel="stylesheet" href="./style.css">
-      <script src="./script.js"></script>
-   </head>
-   <body>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NFR Banking</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js"></script>
+</head>
+
+<body>
+    <div class="container" id="container">
       <div class="backgroundGIF"></div>
-      <div class="container">
-         <div class="title">NFR</div>
-         <!-- NUMELE SERVERULUI/TITLU -->
-         <h1 class="subtitle">
+    <div class="mainMenu">
+        <div class="title">NFR</div>
+        <!-- NUMELE SERVERULUI/TITLU -->
+        <h1 class="subtitle">
             <font class="highlitedChar">B</font>ANKING
-         </h1>
-         <div class="header3">Welcome to the bank!</div>
-         <div class="header4">Here you can manage your bank acount as you wish.</div>
-         <div class="balance">
+        </h1>
+        <div class="header3">Welcome to the bank!</div>
+        <div class="header4">Here you can manage your bank acount as you wish.</div>
+        <div class="balance">
             <div class="amount" id="amount">$ 905360</div>
             <div class="text1">You have it in your bank account</div>
-         </div>
-         <div class="nume">
+        </div>
+        <div class="nume">
             <div class="text2">
-               CitizenID
-               <div class="text3" id="playerid">2268</div>
+                CitizenID
+                <div class="text3" id="playerid">2268</div>
             </div>
-         </div>
-         <div class="iconbalance"></div>
-         <div class="buttons">
+        </div>
+        <div class="iconbalance"></div>
+        <div class="buttons">
             <button class="buttonExit" id="exit">Exit</button>
-            <div class="buttomWithdraw" id="open-withdraw">
-               <div class="image-withdraw"></div>
-               <div class="text4">
-                  WITHDRAW
-                  <div class="text5">Withdraws an amount of money from the bank</div>
-               </div>
+            <div class="buttonWithdraw" id="buttonWithdraw">
+                <div class="image-withdraw ignoreClick"></div>
+                <div class="text4 ignoreClick">
+                    WITHDRAW
+                    <div class="text5 ignoreClick">Withdraws an amount of money from the bank.</div>
+                </div>
             </div>
-            <div class="buttonDeposit" id="open-deposit">
-               <div class="image-deposit"></div>
-               <div class="text6">
-                  DEPOSIT
-                  <div class="text7">Deposit a sum of money from the bank</div>
-               </div>
+            <div class="buttonDeposit" id="buttonDeposit">
+                <div class="image-deposit ignoreClick"></div>
+                <div class="text6 ignoreClick">
+                    DEPOSIT
+                    <div class="text7 ignoreClick">Deposit a sum of money from the bank.</div>
+                </div>
             </div>
-            <div class="buttonTransfer" id="open-transfer">
-               <div class="image-transfer"></div>
-               <div class="text8">
-                  TRANSFER
-                  <div class="text9">Transfer a sum of money from the bank to a person</div>
-               </div>
+            <div class="buttonTransfer" id="buttonTransfer">
+                <div class="image-transfer ignoreClick"></div>
+                <div class="text8 ignoreClick">
+                    TRANSFER
+                    <div class="text9 ignoreClick">Transfer a sum of money from the bank to a person.</div>
+                </div>
             </div>
-         </div>
-         <div class="popup1">
-            <div class="popup-blur"></div>
-            <button class="back" id="back">Back</button>
+        </div>
+    </div>
+    <div class="secondaryMenu" id="secondaryMenu">
+      <button class="back" id="backButtonSecondaryMenu">Back</button>
+        <div class="withdrawMenu" id="withdrawMenu">
             <div class="text10">Amount</div>
-            <input placeholder="EX: 100.000.000" type="number"  class="input1" id="amount1"></input>
+            <input placeholder="Eg. 100.000.000" type="number" class="input1" id="amount1"></input>
             <button class="withdraw" id="withdraw">Withdraw</button>
-         </div>
-         <div class="popup2">
-            <div class="popup2-blur"></div>
-            <button class="back2" id="back2">Back</button>
+        </div>
+        <div class="depositMenu" id="depositMenu">
             <div class="text11">Amount</div>
-            <input placeholder="EX: 100.000.000" type="number"  class="input2" id="amount2"></input>
+            <input placeholder="Eg. 100.000.000" type="number" class="input2" id="amount2"></input>
             <button class="deposit" id="deposit">Deposit</button>
-         </div>
-         <div class="popup3">
-            <div class="popup3-blur"></div>
-            <button class="back3" id="back3">Back</button>
+        </div>
+        <div class="transferMenu" id="transferMenu">
             <div class="text12">CitizenID</div>
-            <input placeholder="EX: 124" type="number"  class="input3" id="userid"></input>
+            <input placeholder="Eg. 124" type="number" class="input3" id="userID"></input>
             <div class="text13">Amount</div>
-            <input placeholder="EX: 100.000.000" type="number"  class="input4" id="amount3"></input>
+            <input placeholder="Eg. 100.000.000" type="number" class="input4" id="amount3"></input>
             <button class="transfer" id="transfer">Transfer</button>
-         </div>
-      </div>
-   </body>
+        </div>
+    </div>
+    </div>
+</body>
+
 </html>
