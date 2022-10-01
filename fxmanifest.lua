@@ -1,13 +1,11 @@
 fx_version "adamant"
 game "gta5"
 dependency "vrp"
-author "CheluAkaGrasu#0001"
-description "NFR_Banking"
+author "NFR#1824 gush3l#6016"
+description "NFR_Banking - A banking system inspired by a Behance project. Made for vRP."
 shared_script 'config.lua'
 
 client_scripts {
-    "@vrp/client/Proxy.lua",
-    "@vrp/client/Tunnel.lua",
     "client/*.lua"
 }
 
