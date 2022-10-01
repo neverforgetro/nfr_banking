@@ -15,7 +15,7 @@ Citizen.CreateThread(
     function()
         while true do
             Wait(0)
-            if nearATM() then
+            if nearATM() or nearBank() then
                 exports["vrp_textui"]:Open("Apasa [E] pentru a deschide meniul ", "#00FF00", "left")
                 if IsControlJustPressed(1, Config.KeyToOpenMenu) then
                     SetDisplay(true)
