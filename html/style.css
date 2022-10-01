@@ -156,7 +156,7 @@ html {
     margin-top: 0vw;
 }
 
-.exit {
+.buttonExit {
     z-index: 1;
     position: absolute;
     font-weight: 600;
@@ -172,7 +172,13 @@ html {
     filter: drop-shadow(0vw 0vw 1vw white);
 }
 
-.border-withdraw {
+@property --withdrawGradientColor {
+  syntax: '<color>';
+  initial-value: rgba(255, 255, 255, 0.2);
+  inherits: false;
+}
+
+.buttomWithdraw {
     z-index: 1;
     position: absolute;
     width: 17vw;
@@ -181,11 +187,12 @@ html {
     left: 23vw;
     border-radius: 1.5vw;
     cursor: pointer;
-    background-image: linear-gradient(to top, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(to top, var(--withdrawGradientColor), transparent);
+    transition: --withdrawGradientColor 0.15s;
 }
 
-.border-withdraw:hover {
-    background-image: linear-gradient(to top, rgba(2, 182, 74, 0.2), transparent);
+.buttomWithdraw:hover {
+  --withdrawGradientColor: rgba(2, 182, 74, 0.2);
 }
 
 .image-withdraw {
@@ -225,7 +232,13 @@ html {
     top: 11.2vw;
 }
 
-.border-deposit {
+@property --depositGradientColor {
+  syntax: '<color>';
+  initial-value: rgba(255, 255, 255, 0.2);
+  inherits: false;
+}
+
+.buttonDeposit {
     z-index: 1;
     position: absolute;
     width: 17vw;
@@ -234,11 +247,12 @@ html {
     left: 43vw;
     cursor: pointer;
     border-radius: 1.5vw;
-    background-image: linear-gradient(to top, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(to top, var(--depositGradientColor), transparent);
+    transition: --depositGradientColor 0.15s;
 }
 
-.border-deposit:hover {
-    background-image: linear-gradient(to top, rgba(2, 182, 74, 0.2), transparent);
+.buttonDeposit:hover {
+  --depositGradientColor: rgba(2, 182, 74, 0.2);
 }
 
 .image-deposit {
@@ -278,7 +292,13 @@ html {
     top: 11.2vw;
 }
 
-.border-transfer {
+@property --transferGradientColor {
+  syntax: '<color>';
+  initial-value: rgba(255, 255, 255, 0.2);
+  inherits: false;
+}
+
+.buttonTransfer {
     z-index: 1;
     position: absolute;
     width: 17vw;
@@ -287,11 +307,12 @@ html {
     left: 63vw;
     border-radius: 1.5vw;
     cursor: pointer;
-    background-image: linear-gradient(to top, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(to top, var(--transferGradientColor), transparent);
+    transition: --transferGradientColor 0.15s;
 }
 
-.border-transfer:hover {
-    background-image: linear-gradient(to top, rgba(2, 182, 74, 0.2), transparent);
+.buttonTransfer:hover {
+  --transferGradientColor: rgba(2, 182, 74, 0.2);
 }
 
 .image-transfer {
