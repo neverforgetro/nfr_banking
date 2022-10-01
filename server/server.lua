@@ -3,19 +3,19 @@ local Proxy = module("vrp", "lib/Proxy")
 vRP = Proxy.getInterface("vRP")
 vRPclient = Tunnel.getInterface("vRP","vRP")
 
-RegisterNetEvent(GetCurrentResourceName() ":requestMoneyAmountInBank")
+RegisterNetEvent(GetCurrentResourceName()..":requestMoneyAmountInBank")
 AddEventHandler(
-    GetCurrentResourceName() ":requestMoneyAmountInBank",
+    GetCurrentResourceName()..":requestMoneyAmountInBank",
     function(source)
         local user_id = vRP.getUserId({source})
         local userbankBalanace = vRP.getBankMoney({user_id})
-        TriggerClientEvent(GetCurrentResourceName() ":updateBankBalance", source, userbankBalanace)
+        TriggerClientEvent(GetCurrentResourceName()..":updateBankBalance", source, userbankBalanace, user_id)
     end
 )
 
-RegisterNetEvent(GetCurrentResourceName() ":action")
+RegisterNetEvent(GetCurrentResourceName()..":action")
 AddEventHandler(
-    GetCurrentResourceName() ":action",
+    GetCurrentResourceName()..":action",
     function(source, data)
         local user_id = vRP.getUserId({source})
         local userbankBalanace = vRP.getBankMoney({user_id})

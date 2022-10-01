@@ -88,3 +88,14 @@ $(document).click(function(event) {
             break;
     }
 })
+
+window.addEventListener('message', (event) => {
+    var data = event.data
+    if (data.type === 'ui') {
+        Display(data.status)
+    }
+    if (data.type === 'updateBankBalance') {
+        $("#amount").html("$ "+data.balance)
+        $("#playerid").html(data.userID)
+    }
+});

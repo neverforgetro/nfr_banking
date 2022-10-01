@@ -1,5 +1,16 @@
 local display = false
 
+function SetDisplay(bool)
+    display = bool
+    SetNuiFocus(bool, bool)
+    SendNUIMessage(
+        {
+            type = "ui",
+            status = bool
+        }
+    )
+end
+
 Citizen.CreateThread(
     function()
         while true do
@@ -9,7 +20,7 @@ Citizen.CreateThread(
                 if IsControlJustPressed(1, Config.KeyToOpenMenu) then
                     SetDisplay(true)
                     TriggerScreenblurFadeIn(750)
-                    TriggerServerEvent(GetCurrentResourceName() ":requestMoneyAmountInBank")
+                    TriggerServerEvent(GetCurrentResourceName()..":requestMoneyAmountInBank")
                 end
             else
                 exports["vrp_textui"]:Close()
@@ -25,15 +36,15 @@ Citizen.CreateThread(
 RegisterNUICallback(
     "requestMoneyAmountInBank",
     function()
-        TriggerServerEvent(GetCurrentResourceName() ":requestMoneyAmountInBank")
+        TriggerServerEvent(GetCurrentResourceName()..":requestMoneyAmountInBank")
     end
 )
 
-RegisterNetEvent(GetCurrentResourceName() ":updateBankBalance")
+RegisterNetEvent(GetCurrentResourceName()..":updateBankBalance")
 AddEventHandler(
-    GetCurrentResourceName() ":updateBankBalance",
-    function(balance)
-        SendNUIMessage({type = "updateBankBalance", bal = balance})
+    GetCurrentResourceName()..":updateBankBalance",
+    function(balance, userID)
+        SendNUIMessage({type = "updateBankBalance", balance = balance, userID = userID})
     end
 )
 
@@ -48,20 +59,9 @@ RegisterNUICallback(
 RegisterNUICallback(
     "action",
     function(data)
-        TriggerServerEvent(GetCurrentResourceName() ":action", data)
+        TriggerServerEvent(GetCurrentResourceName()..":action", data)
     end
 )
-
-function SetDisplay(bool)
-    display = bool
-    SetNuiFocus(bool, bool)
-    SendNUIMessage(
-        {
-            action = "ui",
-            status = bool
-        }
-    )
-end
 
 function nearBank()
     local playerPed = GetPlayerPed(-1)
