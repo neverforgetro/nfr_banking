@@ -3,24 +3,24 @@ local Proxy = module("vrp", "lib/Proxy")
 vRP = Proxy.getInterface("vRP")
 vRPclient = Tunnel.getInterface("vRP","vRP")
 
-RegisterNetEvent(GetCurrentResourceName()..":requestMoneyAmountInBank")
+RegisterNetEvent("nfr_banking:requestMoneyAmountInBank")
 AddEventHandler(
-    GetCurrentResourceName()..":requestMoneyAmountInBank",
-    function(source)
+    "nfr_banking:requestMoneyAmountInBank",
+    function()
         local user_id = vRP.getUserId({source})
         local userbankBalanace = vRP.getBankMoney({user_id})
-        TriggerClientEvent(GetCurrentResourceName()..":updateBankBalance", source, userbankBalanace, user_id)
+        TriggerClientEvent("nfr_banking:updateBankBalance", source, userbankBalanace, user_id)
     end
 )
 
-RegisterNetEvent(GetCurrentResourceName()..":action")
+RegisterNetEvent("nfr_banking:action")
 AddEventHandler(
-    GetCurrentResourceName()..":action",
-    function(source, data)
+    "nfr_banking:action",
+    function(data)
         local user_id = vRP.getUserId({source})
         local userbankBalanace = vRP.getBankMoney({user_id})
         local userBalance = vRP.getMoney({user_id})
-        local data = json.decode(data)
+        TriggerClientEvent("nfr_banking:updateBankBalance", source, userbankBalanace, user_id)
         if (data.action == "withdraw") then
             local amountToWithdraw = tonumber(data.amount)
             if amountToWithdraw > userbankBalanace then

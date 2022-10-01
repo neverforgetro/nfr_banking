@@ -14,16 +14,17 @@ end
 Citizen.CreateThread(
     function()
         while true do
-            Wait(7)
-            if nearBank() or nearATM() then
+            Wait(0)
+            if nearATM() then
                 exports["vrp_textui"]:Open("Apasa [E] pentru a deschide meniul ", "#00FF00", "left")
                 if IsControlJustPressed(1, Config.KeyToOpenMenu) then
                     SetDisplay(true)
                     TriggerScreenblurFadeIn(750)
-                    TriggerServerEvent(GetCurrentResourceName()..":requestMoneyAmountInBank")
+                    TriggerServerEvent("nfr_banking:requestMoneyAmountInBank")
                 end
             else
                 exports["vrp_textui"]:Close()
+                SetDisplay(false)
             end
 
             if IsControlJustPressed(1, 322) then
@@ -33,16 +34,9 @@ Citizen.CreateThread(
     end
 )
 
-RegisterNUICallback(
-    "requestMoneyAmountInBank",
-    function()
-        TriggerServerEvent(GetCurrentResourceName()..":requestMoneyAmountInBank")
-    end
-)
-
-RegisterNetEvent(GetCurrentResourceName()..":updateBankBalance")
+RegisterNetEvent("nfr_banking:updateBankBalance")
 AddEventHandler(
-    GetCurrentResourceName()..":updateBankBalance",
+    "nfr_banking:updateBankBalance",
     function(balance, userID)
         SendNUIMessage({type = "updateBankBalance", balance = balance, userID = userID})
     end
@@ -51,15 +45,17 @@ AddEventHandler(
 RegisterNUICallback(
     "exit",
     function()
-        TriggerScreenblurFadeOut(750)
-        SetDisplay(false)
+        if display then
+            TriggerScreenblurFadeOut(750) 
+            SetDisplay(false) 
+        end
     end
 )
 
 RegisterNUICallback(
     "action",
     function(data)
-        TriggerServerEvent(GetCurrentResourceName()..":action", data)
+        TriggerServerEvent("nfr_banking:action", data.data)
     end
 )
 
@@ -97,7 +93,6 @@ Citizen.CreateThread(
             DisableControlAction(0, 2, display)
             DisableControlAction(0, 142, display)
             DisableControlAction(0, 18, display)
-            DisableControlAction(0, 322, display)
             DisableControlAction(0, 106, display)
         end
     end
