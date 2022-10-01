@@ -8,7 +8,7 @@ function Display(bool) {
     } else {
         $("#container").fadeOut(750);
         closeSecondaryMenu()
-        $.post('http://${GetParentResourceName()}/exit', JSON.stringify({}));
+        $.post('http://nfr_banking/exit', JSON.stringify({}));
         isInMenu = false
     }
 }
@@ -38,10 +38,7 @@ function closeSecondaryMenu() {
 }
 
 function handleAction(data) {
-    console.log(data)
-    $.post('http://${GetParentResourceName()}/action', JSON.stringify({
-        data
-    }));
+    $.post('http://nfr_banking/action', JSON.stringify({data}));
 }
 
 $(document).click(function(event) {
