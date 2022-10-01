@@ -54,14 +54,14 @@ AddEventHandler(
             end
         end
         if (data.action == "transfer") then
-            local target_user_id = vRP.getUserId({data.userid})
-            local target_source = vRP.getUserSource({target_user_id})
+            local target_user_id = data.userid
+            local target_source = vRP.getUserSource({tonumber(target_user_id)})
             local amountToTransfer = tonumber(data.amount)
-            if target_source == nil then 
+            if target_source == nil then
                 vRPclient.notify(source,{"Eroare: Acest cetatean nu se afla momentan in oras, incearca mai tarziu!"})
                 return
             end
-            if target_user_id == user_id then
+            if tonumber(target_user_id) == tonumber(user_id) then
                 vRPclient.notify(source,{"Eroare: Nu ai cum sa iti trimiti bani singur!"})
                 return
             end
@@ -72,8 +72,8 @@ AddEventHandler(
                 local target_bankBalance = vRP.getBankMoney({target_user_id})
                 vRP.setBankMoney({target_user_id,target_bankBalance + amountToTransfer})
                 vRP.setBankMoney({user_id,userbankBalanace - amountToTransfer})
-                vRPclient.notify(source,{string.format("Succes: Ai transferat cu succes suma de %s$ catre cetateanul cu ID-ul %s. Noua ta balanca in banca este %s$!",amountToTransfer, amount.amountToTransfer, userbankBalanace - amountToTransfer)})
-                vRPclient.notify(target_source,{string.format("Succes: Ai depozitat cu succes in banca suma de %s$. Noua ta balanta in banca este %s$!",amountToDeposit,userbankBalanace + amountToDeposit)})
+                vRPclient.notify(source,{string.format("Succes: Ai transferat cu succes suma de %s$ catre cetateanul cu ID-ul %s. Noua ta balanca in banca este %s$!",amountToTransfer, amountToTransfer, userbankBalanace - amountToTransfer)})
+                vRPclient.notify(target_source,{string.format("Succes: Ti-a fost transferata cu succes in banca suma de %s$ de la cetateanul cu ID-ul %s. Noua ta balanta in banca este %s$!",amountToTransfer,user_id,userbankBalanace + amountToTransfer)})
                 return
             end
         end

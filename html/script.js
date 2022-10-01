@@ -76,7 +76,7 @@ $(document).click(function(event) {
         case "transfer":
             var data = {}
             data.userid = $("#userID").val()
-            data.amount = $("#amount2").val()
+            data.amount = $("#amount3").val()
             data.action = "transfer"
             handleAction(data)
             Display(false)
